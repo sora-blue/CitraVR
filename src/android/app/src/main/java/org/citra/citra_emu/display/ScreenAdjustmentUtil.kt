@@ -39,4 +39,8 @@ class ScreenAdjustmentUtil(private val windowManager: WindowManager,
         IntSetting.SCREEN_LAYOUT.int = layoutOption.int
         settings.saveSetting(IntSetting.SCREEN_LAYOUT, SettingsFile.FILE_NAME_CONFIG)
     }
+
+    fun rotateScreenAnticlockwise90(){
+        NativeLibrary.rotateScreensVR(true, 90.0f)
+    }
 }

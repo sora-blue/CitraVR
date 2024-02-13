@@ -59,6 +59,7 @@
 #include "video_core/gpu.h"
 #include "video_core/renderer_base.h"
 #include "vr/main_helper.h"
+#include "vr/vr_settings.h"
 
 #if defined(ENABLE_VULKAN) && CITRA_ARCH(arm64)
 #include <adrenotools/driver.h>
@@ -352,6 +353,20 @@ void Java_org_citra_citra_1emu_NativeLibrary_swapScreens([[maybe_unused]] JNIEnv
     }
     InputManager::screen_rotation = rotation;
     Camera::NDK::g_rotation = rotation;
+}
+
+void Java_org_citra_citra_1emu_NativeLibrary_rotateScreensVR([[maybe_unused]] JNIEnv* env,
+                                                           [[maybe_unused]] jobject obj,
+                                                           jboolean is_anticlockwise,
+                                                           jfloat degree) {
+    // Note: For now, only anticlockwise 90 degrees rotation is implemented.
+    //       The arguments are for extensibility.
+    if (!is_anticlockwise || (int)degree != 90) {
+        return;
+    }
+
+    // modify settings temporarily
+    VRSettings::values.rotation_anticlockwise_changed = true;
 }
 
 jboolean Java_org_citra_citra_1emu_NativeLibrary_areKeysAvailable([[maybe_unused]] JNIEnv* env,

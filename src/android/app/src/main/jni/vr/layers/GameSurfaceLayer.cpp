@@ -34,6 +34,7 @@ constexpr float lowerPanelScaleFactor = 0.75f;
 
 const std::vector<float> immersiveLevelFactor = {1.0f, 5.0f, 3.0f};
 
+bool isRotatedAnticlockwise = false;
 /** Used to translate texture coordinates into the corresponding coordinates
  * on the Android Activity Window.
  *
@@ -137,7 +138,7 @@ XrPosef CreateLowerPanelFromWorld(const XrPosef& topPanelFromWorld) {
     XrPosef         lowerPanelFromWorld = topPanelFromWorld;
 
     // If rotated, make lower panel the same surface with the upper one
-    if (VRSettings::values.rotation_anticlockwise_enabled) {
+    if (isRotatedAnticlockwise) {
         constexpr float kLowerPanelRotatedXOffset = 1.0f;
         lowerPanelFromWorld.position.x += kLowerPanelRotatedXOffset;
         return lowerPanelFromWorld;
@@ -228,7 +229,7 @@ XrPosef CreateTopPanelFromWorld(const XrVector3f& position) {
     XrPosef pose{XrMath::Quatf::Identity(), position};
 
     // If rotated, move to left a little and get closer to viewer
-    if (VRSettings::values.rotation_anticlockwise_enabled) {
+    if (isRotatedAnticlockwise) {
         constexpr float kUpperPanelRotatedXOffset = -0.5f;
         constexpr float kUpperPanelRotatedZOffset = 0.25f;
         constexpr XrVector3f playerPosition = {0, 0, 0};
@@ -435,7 +436,7 @@ void GameSurfaceLayer::SetTopPanelFromController(const XrVector3f& controllerPos
                                                                    // window from the viewer
 
     // lock top panel if it's rotated
-    if (VRSettings::values.rotation_anticlockwise_enabled) {
+    if (isRotatedAnticlockwise) {
         return;
     }
 
@@ -460,6 +461,14 @@ void GameSurfaceLayer::SetTopPanelFromThumbstick(const float thumbstickY) {
     mTopPanelFromWorld.position.z =
         std::min(mTopPanelFromWorld.position.z, mLowerPanelFromWorld.position.z);
     mTopPanelFromWorld.position.z = std::max(mTopPanelFromWorld.position.z, kMaxDepth);
+}
+
+void GameSurfaceLayer::RotatePanelsFromHotkey() {
+    isRotatedAnticlockwise = !isRotatedAnticlockwise;
+
+    constexpr XrVector3f viewerPosition{0, 0, -2.0f};
+    mTopPanelFromWorld = CreateTopPanelFromWorld(viewerPosition);
+    mLowerPanelFromWorld = CreateLowerPanelFromWorld(mTopPanelFromWorld);
 }
 
 // Next error code: -2

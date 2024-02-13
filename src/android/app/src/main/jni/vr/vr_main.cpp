@@ -490,6 +490,12 @@ private:
             layers[layerCount++].Passthrough = passthroughLayer;
         }
 
+        // Check if hotkey triggers screen rotation, and if so, reset panels
+        if (VRSettings::values.rotation_anticlockwise_changed) {
+            mGameSurfaceLayer->RotatePanelsFromHotkey();
+            VRSettings::values.rotation_anticlockwise_changed = false;
+        }
+
         mGameSurfaceLayer->Frame(gOpenXr->mLocalSpace, layers, layerCount);
 
         if (mShouldShowErrorMessage) {

@@ -168,6 +168,12 @@ object NativeLibrary {
      */
     external fun swapScreens(swapScreens: Boolean, rotation: Int)
 
+    /**
+     * Rotates the top and bottom screens in VR.
+     * Note: For now, only anticlockwise 90 degrees rotation is implemented.
+     * **/
+    external fun rotateScreensVR(isAnticlockwise: Boolean, degree: Float)
+
     external fun initializeGpuDriver(
         hookLibDir: String?,
         customDriverDir: String?,

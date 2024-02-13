@@ -18,6 +18,7 @@ class HotkeyUtility(private val screenAdjustmentUtil: ScreenAdjustmentUtil) {
                 Hotkey.CYCLE_LAYOUT.button -> screenAdjustmentUtil.cycleLayouts()
                 Hotkey.CLOSE_GAME.button -> EmulationLifecycleUtil.closeGame()
                 Hotkey.PAUSE_OR_RESUME.button -> EmulationLifecycleUtil.pauseOrResume()
+                Hotkey.ROTATION_SCREEN_ANTICLOCKWISE.button -> screenAdjustmentUtil.rotateScreenAnticlockwise90()
                 else -> {}
             }
             return true

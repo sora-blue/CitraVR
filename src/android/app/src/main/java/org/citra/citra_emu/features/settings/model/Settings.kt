@@ -141,6 +141,7 @@ class Settings {
         const val HOTKEY_CYCLE_LAYOUT = "hotkey_toggle_layout"
         const val HOTKEY_CLOSE_GAME = "hotkey_close_game"
         const val HOTKEY_PAUSE_OR_RESUME = "hotkey_pause_or_resume_game"
+        const val HOTKEY_SCREEN_ROTATION_ANTICLOCKWISE = "hotkey_screen_rotation_anticlockwise"
 
         val buttonKeys = listOf(
             KEY_BUTTON_A,
