@@ -59,6 +59,7 @@
 #include "video_core/gpu.h"
 #include "video_core/renderer_base.h"
 #include "vr/main_helper.h"
+#include "jni/vr/vr_settings.h"
 
 #if defined(ENABLE_VULKAN) && CITRA_ARCH(arm64)
 #include <adrenotools/driver.h>
@@ -749,5 +750,19 @@ void Java_org_citra_citra_1emu_NativeLibrary_logDeviceInfo([[maybe_unused]] JNIE
     // There is no decent way to get the OS version, so we log the API level instead.
     LOG_INFO(Frontend, "Host OS: Android API level {}", android_get_device_api_level());
 }
+
+
+void Java_org_citra_citra_1emu_NativeLibrary_switchOrientationVR([[maybe_unused]] JNIEnv *env,
+                                                                 [[maybe_unused]] jobject obj) {
+    // modify settings temporarily
+    VRSettings::values.orientation_changed = true;
+}
+
+void Java_org_citra_citra_1emu_NativeLibrary_switchMonoStereoVR(JNIEnv *env, jobject obj) {
+    // modify settings temporarily
+    const bool enabled = VRSettings::values.render_right_with_left_enabled;
+    VRSettings::values.render_right_with_left_enabled = !enabled;
+}
+
 
 } // extern "C"

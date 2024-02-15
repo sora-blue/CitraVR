@@ -979,6 +979,15 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                     IntSetting.DEBUG_RENDERER.defaultValue
                 )
             )
+            add(
+                SwitchSetting(
+                    BooleanSetting.USE_IN_GAME_MENU,
+                    R.string.vr_use_beta_menu,
+                    R.string.vr_use_beta_menu_description,
+                    BooleanSetting.USE_IN_GAME_MENU.key,
+                    BooleanSetting.USE_IN_GAME_MENU.defaultValue
+                )
+            )
         }
     }
 

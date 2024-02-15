@@ -17,7 +17,8 @@ enum class BooleanSetting(
     VR_EXTRA_PERFORMANCE_MODE("vr_extra_performance_mode", Settings.SECTION_VR, false),
     VR_IMMERSIVE_MODE("vr_immersive_mode", Settings.SECTION_VR, false),
     VR_ROTATE_ANTICLOCKWISE("vr_rotate_anticlockwise", Settings.SECTION_VR, false),
-    VR_RENDER_RIGHT_WITH_LEFT("vr_render_right_with_left", Settings.SECTION_VR, false);
+    VR_RENDER_RIGHT_WITH_LEFT("vr_render_right_with_left", Settings.SECTION_VR, false),
+    USE_IN_GAME_MENU("use_in_game_menu", Settings.SECTION_DEBUG, false);
     
     override var boolean: Boolean = defaultValue
 

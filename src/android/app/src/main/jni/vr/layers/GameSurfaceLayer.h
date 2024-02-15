@@ -135,6 +135,8 @@ public:
 
     void SetTopPanelFromThumbstick(const float thumbstickY);
 
+    void SwitchPanelsOrientation();
+
 private:
     int  Init(const jobject activityObject, const XrVector3f& position, const XrSession& session);
     void Shutdown();

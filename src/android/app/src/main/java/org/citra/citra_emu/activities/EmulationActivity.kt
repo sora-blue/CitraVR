@@ -33,6 +33,7 @@ import org.citra.citra_emu.contracts.OpenFileResultContract
 import org.citra.citra_emu.databinding.ActivityEmulationBinding
 import org.citra.citra_emu.display.ScreenAdjustmentUtil
 import org.citra.citra_emu.features.hotkeys.HotkeyUtility
+import org.citra.citra_emu.features.settings.model.BooleanSetting
 import org.citra.citra_emu.features.settings.model.SettingsViewModel
 import org.citra.citra_emu.features.settings.model.view.InputBindingSetting
 import org.citra.citra_emu.fragments.MessageDialogFragment
@@ -45,6 +46,7 @@ import org.citra.citra_emu.utils.Log
 import org.citra.citra_emu.utils.ThemeUtil
 import org.citra.citra_emu.viewmodel.EmulationViewModel
 import org.citra.citra_emu.vr.utils.VRUtils
+import org.citra.citra_emu.vr.utils.VrMessageQueue
 
 open class EmulationActivity : AppCompatActivity() {
     private val preferences: SharedPreferences
@@ -198,6 +200,12 @@ open class EmulationActivity : AppCompatActivity() {
                 // cover for either a fault on androidx's side or in OEM skins (MIUI at least)
                 if (event.keyCode == KeyEvent.KEYCODE_BACK) {
                     onBackPressed()
+                }
+
+                // vr: in-game menu
+                var useInGameMenu = BooleanSetting.USE_IN_GAME_MENU.boolean
+                if (useInGameMenu && event.keyCode == KeyEvent.KEYCODE_BUTTON_START) {
+                   VrMessageQueue.post(VrMessageQueue.MessageType.SHOW_MENU, 1)
                 }
 
                 hotkeyUtility.handleHotkey(button)

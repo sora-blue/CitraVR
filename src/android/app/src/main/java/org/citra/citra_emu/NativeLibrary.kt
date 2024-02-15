@@ -168,6 +168,18 @@ object NativeLibrary {
      */
     external fun swapScreens(swapScreens: Boolean, rotation: Int)
 
+    /**
+     * Switch between vertical/horizontal screens.
+     * Horizontal   : default
+     * Vertical     : rotate screens upright, make screens all in the same surface
+     * **/
+    external fun switchOrientationVR()
+
+    /**
+     * Switch between mono/stereo images.
+     * */
+    external fun switchMonoStereoVR()
+
     external fun initializeGpuDriver(
         hookLibDir: String?,
         customDriverDir: String?,

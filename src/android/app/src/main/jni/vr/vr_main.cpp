@@ -240,6 +240,11 @@ public:
             XrMath::Quatf::FromEuler(0.0f, -MATH_FLOAT_PI / 4.0f, 0.0f), jni, mActivityObject,
             gOpenXr->mSession);
 
+        mMenuLayer = std::make_unique<UILayer>(
+                "org/citra/citra_emu/vr/ui/VrMenuLayer", XrVector3f{0, 0.0f, -0.5f},
+                XrMath::Quatf::FromEuler(0.0f, -MATH_FLOAT_PI / 4.0f, 0.0f), jni, mActivityObject,
+                gOpenXr->mSession);
+
         //////////////////////////////////////////////////
         // Intialize JNI methods
         //////////////////////////////////////////////////
@@ -490,12 +495,19 @@ private:
             layers[layerCount++].Passthrough = passthroughLayer;
         }
 
+        // Check if hotkey triggers screen rotation, and if so, reset panels
+        if (VRSettings::values.orientation_changed) {
+            mGameSurfaceLayer->SwitchPanelsOrientation();
+            VRSettings::values.orientation_changed = false;
+        }
+
         mGameSurfaceLayer->Frame(gOpenXr->mLocalSpace, layers, layerCount);
 
         if (mShouldShowErrorMessage) {
             mErrorMessageLayer->Frame(gOpenXr->mLocalSpace, layers, layerCount);
         }
         if (mIsKeyboardActive) { mKeyboardLayer->Frame(gOpenXr->mLocalSpace, layers, layerCount); }
+        if (mIsMenuActive) { mMenuLayer->Frame(gOpenXr->mLocalSpace, layers, layerCount); }
 
         {
             {
@@ -546,6 +558,13 @@ private:
                                 if (triggerState.changedSinceLastSync) {
                                     mKeyboardLayer->SendClickToUI(cursorPos2d,
                                                                   triggerState.currentState);
+                                }
+                            } else if (mIsMenuActive) {
+                                shouldRenderCursor = mMenuLayer->GetRayIntersectionWithPanel(
+                                        start, end, cursorPos2d, cursorPose3d);
+                                if (triggerState.changedSinceLastSync) {
+                                    mMenuLayer->SendClickToUI(cursorPos2d,
+                                                              triggerState.currentState);
                                 }
                             } else {
                                 shouldRenderCursor = mGameSurfaceLayer->GetRayIntersectionWithPanel(
@@ -883,6 +902,19 @@ private:
                     break;
                 }
 
+                case Message::Type::SHOW_MENU: {
+                    const bool shouldActivateMenu = message.mPayload == 1;
+                    if (!mIsMenuActive && shouldActivateMenu) {
+                        ALOGD("Received SHOW_MENU message, set menu to active");
+                        mIsMenuActive = true;
+                        PauseEmulation();
+                    } else if (mIsMenuActive && !shouldActivateMenu){
+                        ALOGD("Received SHOW_MENU message, set menu to inactive");
+                        mIsMenuActive = false;
+                        ResumeEmulation();
+                    }
+                }
+
                 default:
                     ALOGE("Unknown message type: %d", message.mType);
                     break;
@@ -900,6 +932,7 @@ private:
     bool              mIsXrSessionActive      = false;
     bool              mHasFocus               = false;
     bool              mIsKeyboardActive       = false;
+    bool              mIsMenuActive           = false;
     bool              mShouldShowErrorMessage = false;
     bool              mIsEmulationPaused      = false;
 
@@ -908,6 +941,7 @@ private:
     std::unique_ptr<GameSurfaceLayer> mGameSurfaceLayer;
     std::unique_ptr<PassthroughLayer> mPassthroughLayer;
     std::unique_ptr<UILayer>          mKeyboardLayer;
+    std::unique_ptr<UILayer>          mMenuLayer;
 
     std::unique_ptr<InputStateStatic> mInputStateStatic;
     InputStateFrame                   mInputStateFrame;

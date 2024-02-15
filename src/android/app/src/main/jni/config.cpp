@@ -302,7 +302,7 @@ void Config::ReadValues() {
       Settings::values.graphics_api = Settings::GraphicsAPI::OpenGL;
     }
 
-    VRSettings::values.rotation_anticlockwise_enabled = sdl2_config->GetBoolean(
+    VRSettings::values.orientation_changed = sdl2_config->GetBoolean(
             "VR", "vr_rotate_anticlockwise", false);
     VRSettings::values.render_right_with_left_enabled = sdl2_config->GetBoolean(
             "VR", "vr_render_right_with_left", false);

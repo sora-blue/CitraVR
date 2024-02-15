@@ -696,8 +696,11 @@
     <string name="vr_notice_description">During your first playthrough of a game or level, you might experience brief pauses or audio stutters. \n\nAfter the shaders are loaded, they are stored to the device, preventing these stutters on subsequent launches. </string>
     <string name="vr_notice_description2">Some games just won\'t run well. Be sure to check the CitraVR Game Compatibility List to see which games perform best.</string>
     <string name="vr_input_binding_subtitle">\nHaving trouble? Press Select + Start to disable Gamepad Gaze Mode, then try again</string>
-    <string name="vr_rotate_anticlockwise">Turn the screen 90 degrees anticlockwise</string>
+    <string name="vr_rotate_anticlockwise">Rotate Screens Upright</string>
     <string name="vr_rotate_anticlockwise_description">Some game requires you rotate your 3ds machine. This option simulates it. </string>
-    <string name="vr_render_right_with_left">Render right eye with left eye image</string>
+    <string name="vr_render_right_with_left">Render Mono Image</string>
     <string name="vr_render_right_with_left_description">When you can only see black screen with right eye, try this option.</string>
+    <string name="vr_use_beta_menu">Use beta in-game menu</string>
+    <string name="vr_use_beta_menu_description">This option uses start button (default as quest left controller menu button) to open in-game menu. </string>
+    <string name="vr_close_menu">Close menu</string>
 </resources>

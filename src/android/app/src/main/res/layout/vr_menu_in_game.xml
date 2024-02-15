@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vr_menu"
+    android:layout_width="400dp"
+    android:layout_height="200dp"
+    android:layout_gravity="center"
+    android:layout_marginHorizontal="30dp"
+    android:background="@drawable/vr_menu_background"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/vr_menu_list_btn"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/vr_menu_btn_close_menu"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/vr_close_menu" />
+
+        <Button
+            android:id="@+id/vr_menu_btn_close_game"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/emulation_close_game" />
+
+        <Button
+            android:id="@+id/vr_menu_btn_rotation"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/vr_rotate_anticlockwise" />
+
+        <Button
+            android:id="@+id/vr_menu_btn_mono"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/vr_render_right_with_left" />
+
+    </LinearLayout>
+
+</RelativeLayout>
